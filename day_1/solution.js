@@ -1,11 +1,12 @@
 const fs = require('fs');
+const path = require('path');
+
 
 const parseNumbers = (data) => {
-    stringNumbers = data.split('\n')
-    let numbers = stringNumbers.map(element => {
+    return data.split('\n').map(element => {
         return parseInt(element)
-    });
-    return numbers
+    }
+    )
 }
 
 const partOne = (numbers) => {

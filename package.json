@@ -4,7 +4,9 @@
   "description": "advent of code challenges",
   "main": "index.js",
   "scripts": {
-    "day1": "cd day_1 && node solution.js"
+    "day1": "cd day_1 && node solution.js",
+    "day2": "cd day_2 && node solution.js"
+
   },
   "author": "",
   "license": "ISC",
