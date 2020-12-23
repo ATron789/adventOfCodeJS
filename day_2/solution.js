@@ -36,7 +36,7 @@ const policyPasswordPoliciesChecker = (data) =>{
 
 
 
-fs.readFile( 'puzzleInput.txt', 'utf8', (err, data) => {
+fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
     if (err) {
         return console.log(err);
       }

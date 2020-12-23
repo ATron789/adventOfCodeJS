@@ -4,8 +4,10 @@
   "description": "advent of code challenges",
   "main": "index.js",
   "scripts": {
-    "day1": "cd day_1 && node solution.js",
-    "day2": "cd day_2 && node solution.js"
+    "day1": "node day_1/solution.js",
+    "day2": "node day_2/solution.js",
+    "day3": "node day_3/solution.js"
+
 
   },
   "author": "",
