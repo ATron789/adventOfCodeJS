@@ -7,7 +7,7 @@ const mapArrayBuilder = (data) => {
     return mapRows;
 };
 
-const treeCounter = (mapRows, y = 0, x = 0, treesCount = 0) => {
+const treeCounter = (mapRows, incrementX, incrementY, x = 0, y = 0, treesCount = 0) => {
     
     if (x >=  mapRows[y].length) {
         x -= (mapRows[y].length)
@@ -15,11 +15,12 @@ const treeCounter = (mapRows, y = 0, x = 0, treesCount = 0) => {
 
     mapRows[y][x] === '#' ? treesCount ++ : null;
 
-    y += 1;
-    x += 3;
+    y += incrementY;
+    x += incrementX;
 
-    return  y >= mapRows.length? treesCount : treeCounter(mapRows, y, x, treesCount);
+    return  y >= mapRows.length? treesCount : treeCounter(mapRows, incrementX, incrementY,  x, y, treesCount);
 };
+
 
 
 fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
@@ -27,8 +28,13 @@ fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
         return console.log(err);
       }
       const mapRows = mapArrayBuilder(data);
-      const partOne = treeCounter(mapRows);
-      console.log(`Part one solution: ${partOne}`)
-}
+      const rightThreeDownOne = treeCounter(mapRows, 3, 1);
+      console.log(`Part one solution: ${rightThreeDownOne}`)
+      const rightOneDownOne = treeCounter(mapRows, 1, 1);
+      const rightFiveDownOne = treeCounter(mapRows, 5, 1);
+      const rightSevenDownOne = treeCounter(mapRows, 7, 1);
+      const rightOneDownTwo = treeCounter(mapRows, 1, 2);
+      console.log(`Part one solution: ${rightThreeDownOne * rightOneDownOne * rightFiveDownOne * rightSevenDownOne * rightOneDownTwo}`)
+} 
 );
 
