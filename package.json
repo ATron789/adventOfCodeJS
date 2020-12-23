@@ -6,7 +6,9 @@
   "scripts": {
     "day1": "node day_1/solution.js",
     "day2": "node day_2/solution.js",
-    "day3": "node day_3/solution.js"
+    "day3": "node day_3/solution.js",
+    "day4": "node day_4/solution.js"
+
 
 
   },

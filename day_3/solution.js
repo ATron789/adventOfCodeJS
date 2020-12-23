@@ -1,10 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+
 const mapArrayBuilder = (data) => {
     let mapRows = data.split('\n');
     return mapRows;
 };
+
 
 const treeCounter = (mapRows, incrementX, incrementY, x = 0, y = 0, treesCount = 0) => {
     
@@ -19,7 +21,6 @@ const treeCounter = (mapRows, incrementX, incrementY, x = 0, y = 0, treesCount =
 
     return  y >= mapRows.length? treesCount : treeCounter(mapRows, incrementX, incrementY,  x, y, treesCount);
 };
-
 
 
 fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
