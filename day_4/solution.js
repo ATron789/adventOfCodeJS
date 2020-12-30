@@ -10,7 +10,6 @@ const parsePassports = (data) => {
     const passport = {};
 
     for (parsedData of parsedPassportData) {
-      let key, value
       [key, value] = parsedData.split(':');
       passport[key] = value;
     };
@@ -28,7 +27,7 @@ const validateHeight = (hgt) => {
   if (!validFormat) {
     return false;
   };
-  let number, height;
+
   [number, unit] = hgt.match(/\d+|cm|in/g)
   
   number = Number(number);
@@ -50,43 +49,59 @@ const exactValueValidation = (passportAttribute, regex) => {
 };
 
 
-const validationRules = (passport) => {
-  const byr = String(passport.byr).length === 4 && passport.byr >= 1920 && passport.byr <= 2002;
-  const iyr = String(passport.iyr).length === 4 && passport.iyr >= 2010 && passport.iyr <= 2020;
-  const eyr = String(passport.eyr).length === 4 && passport.eyr >= 2020 && passport.eyr <= 2030;
+const checkValidationRules = (passport) => {
+  const byr = passport.byr.length === 4 && Number(passport.byr) >= 1920 && Number(passport.byr) <= 2002;
+  if (!byr) return false
+  const iyr = passport.iyr.length === 4 && Number(passport.iyr) >= 2010 && Number(passport.iyr) <= 2020;
+  if (!iyr) return false
+  const eyr = passport.eyr.length === 4 && Number(passport.eyr) >= 2020 && Number(passport.eyr) <= 2030;
+  if (!eyr) return false
   const hgt = validateHeight(passport.hgt);
-  const hcl = exactValueValidation(passport.hcl, '#?[0-9a-f]{6}');
+  if (!hgt) return false
+  const hcl = exactValueValidation(passport.hcl, '#{1}[0-9a-f]{6}');
+  if (!hcl) return false
   const ecl = exactValueValidation(passport.ecl, '(amb|blu|brn|gry|grn|hzl|oth)');
+  if (!ecl) return false
   const pid = exactValueValidation(passport.pid, '[0-9]{9}');
-
+  return pid 
 };
 
 
-const countValidPassports = (passports, neededKeys, validationFunction) => {
-  let validPassports = 0
+const validatePassports = (passports) => {
+  let validPassports = []
+  for (passport of passports) {
+    if (checkValidationRules(passport)) validPassports.push(passport)
+  };
+  return validPassports;
+};
+
+
+const collectPassportsWithAllKeys = (passports, neededKeys) => {
+
+  let validPassports = []
   
   for (passport of passports) {
-    neededKeys.every( key => Object.keys(passport).includes(key)) ? validPassports += 1 : null;
+    neededKeys.every( key => Object.keys(passport).includes(key)) ? validPassports.push(passport) : null;
   };
-
   return validPassports;
 };
 
 
 fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
-  if (err) {
-    return console.log(err);
-    };
+  if (err) return console.log(err);
 
-  const optionalKeys = ['cid'];
   const neededKeysPartOne = [
       'byr', 'iyr', 'eyr', 'hgt',
       'hcl', 'ecl', 'pid'
     ];
 
   passports = parsePassports(data);
-  const numberValidPassports = countValidPassports(passports, neededKeysPartOne, null);
-  console.log(numberValidPassports);
+
+  const passportsWithAllKeys = collectPassportsWithAllKeys(passports, neededKeysPartOne);
+  console.log('Part one Solution: ', passportsWithAllKeys.length);
+
+  const validPassports = validatePassports(passportsWithAllKeys);
+  console.log('Part two Solution: ', validPassports.length);
   }
 );
 

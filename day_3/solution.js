@@ -24,17 +24,16 @@ const treeCounter = (mapRows, incrementX, incrementY, x = 0, y = 0, treesCount =
 
 
 fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
-    if (err) {
-        return console.log(err);
-      }
-      const mapRows = mapArrayBuilder(data);
-      const rightThreeDownOne = treeCounter(mapRows, 3, 1);
-      console.log(`Part one solution: ${rightThreeDownOne}`)
-      const rightOneDownOne = treeCounter(mapRows, 1, 1);
-      const rightFiveDownOne = treeCounter(mapRows, 5, 1);
-      const rightSevenDownOne = treeCounter(mapRows, 7, 1);
-      const rightOneDownTwo = treeCounter(mapRows, 1, 2);
-      console.log(`Part one solution: ${rightThreeDownOne * rightOneDownOne * rightFiveDownOne * rightSevenDownOne * rightOneDownTwo}`)
+    if (err) return console.log(err);
+    const mapRows = mapArrayBuilder(data);
+    let treeCount = treeCounter(mapRows, 3, 1);
+    console.log('Part one solution: ', treeCount);
+
+    const differentSlopes = [[1,1], [5, 1], [7, 1], [1, 2]];
+    for (slopeCoor of differentSlopes) {
+    treeCount *= treeCounter(mapRows, ...slopeCoor)
+    };
+    console.log('Part one solution: ', treeCount)
 } 
 );
 

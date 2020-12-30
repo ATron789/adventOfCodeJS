@@ -10,11 +10,9 @@ const policyPasswordPoliciesChecker = (data) =>{
 
 
     for (const row of rows) {
-        let rawPolicy, password;
-        [rawPolicy, password] = row.split(': ');
+        const [rawPolicy, password] = row.split(': ');
 
-        let arg1, arg2, letter;
-        [ arg1, arg2, letter ] = rawPolicy.split(/[-\s]+/);
+        const [arg1, arg2, letter] = rawPolicy.split(/[-\s]+/);
         
         letterRe = RegExp(letter, 'g');
         const occurencesPolicy = password.match(letterRe)
@@ -36,10 +34,8 @@ const policyPasswordPoliciesChecker = (data) =>{
 
 
 
-fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
-    if (err) {
-        return console.log(err);
-      }
+fs.readFile(path.join(__dirname,'puzzleInputs.txt'), 'utf8', (err, data) => {
+    if (err) return console.log(err);
     policyPasswordPoliciesChecker(data);
 }
 );

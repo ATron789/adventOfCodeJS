@@ -30,14 +30,10 @@ const partTwo = (numbers) => {
 
 
 fs.readFile(path.join(__dirname,'puzzleInput.txt'), 'utf8', (err, data) => {
-    if (err) {
-        return console.log(err);
-      }
-    const numbers = parseNumbers(data)
-    let partOnefirstNumber, partOnesecondNumber
-    [partOnefirstNumber, partOnesecondNumber] = partOne(numbers)
-    console.log('Part One Solution: ', partOnefirstNumber * partOnesecondNumber)
-    let partTwofirstNumber, partTwosecondNumber, partTwothirdNumber
-    [partTwofirstNumber, partTwosecondNumber, partTwothirdNumber] = partTwo(numbers)
-    console.log('Part Two Solution: ', partTwofirstNumber * partTwosecondNumber * partTwothirdNumber)
+    if (err) return console.log(err);
+    const numbers = parseNumbers(data);
+    const [partOnefirstNumber, partOnesecondNumber] = partOne(numbers);
+    console.log('Part One Solution: ', partOnefirstNumber * partOnesecondNumber);
+    const [partTwofirstNumber, partTwosecondNumber, partTwothirdNumber] = partTwo(numbers);
+    console.log('Part Two Solution: ', partTwofirstNumber * partTwosecondNumber * partTwothirdNumber);
 });
